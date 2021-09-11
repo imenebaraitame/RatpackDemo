@@ -35,5 +35,5 @@ dependencies {
 }
 application {
     // Define the main class for the application.
-    mainClass = 'DemoRatpack.App'
+    mainClass = 'com.Demo.RatpackDemo.App'
 }
