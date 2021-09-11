@@ -11,7 +11,7 @@ Start the application either
 1. By cd into the directory and run:
 
 
-     gradle run
+     ./run.sh
 
 
 2. Or by importing the project into your IDE and executing the "RatpackDemo.App class"
