@@ -11,10 +11,10 @@ Start the application either
 1. By cd into the directory and run:
 
 
-     ./run.sh
+     ./gradlew run -t
 
 
-2. Or by importing the project into your IDE and executing the "RatpackDemo.App class"
+2. Or by importing the project into your IDE and executing the "com.corposense.ocr.demo.App class"
 
 This will start the ratpack app in a development mode. In your browser go to
 
