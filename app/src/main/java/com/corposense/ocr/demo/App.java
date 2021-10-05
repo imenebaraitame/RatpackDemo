@@ -12,9 +12,15 @@ public class App {
     public static void main(String... args) throws Exception {
         RatpackServer.start(server -> server
                 .handlers(chain -> chain
-                        .get(ctx -> ctx.render("Hello World!"))
-                        .get(":name", ctx -> ctx.render("Hello " +
-                                ctx.getPathTokens().get("name") + "!"))
+                        .all(new FormHandler() )
+                        //.get(ctx -> ctx.getResponse()
+                                //.send("I am in the default route!"))
+                        .get("route1",ctx -> ctx.getResponse()
+                                .send("I am in route1!"))
+                        .get("route2/:param",ctx -> ctx.getResponse()
+                                .send(String.format("received param: %s",
+                                        ctx.getPathTokens().get("param"))))
+
                 )
         );
     }
