@@ -1,16 +1,7 @@
-image:
-  file: .gitpod.Dockerfile
 
-  
 tasks:
-  - before: >
-      source ~/.bashrc
-    init: >
-      gradle --version
-      sudo chmod +x run.sh
-    command: >
-      ./run.sh
-  
+
+    - command: ./gradlew run -t
 
 
 ports:
