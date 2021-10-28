@@ -33,8 +33,14 @@ repositories {
 
 dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:1.7.30")
+    //compileOnly('org.thymeleaf:thymeleaf:3.0.3.RELEASE')
+    implementation("io.ratpack:ratpack-thymeleaf3:1.9.0")
+    implementation("io.ratpack:ratpack-guice:1.9.0")
+
 }
+
 application {
     // Define the main class for the application.
     mainClassName = 'com.corposense.ocr.demo.App'
+
 }
