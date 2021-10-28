@@ -2,7 +2,8 @@
 
 [![Open in GitPod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
 
-This a Simple example Ratpack Hello world application that
+This a Simple web application that upload file and send it back to the client and it:
+
 1. Is implemented in java
 2. Uses the Gradle java plugin
 
