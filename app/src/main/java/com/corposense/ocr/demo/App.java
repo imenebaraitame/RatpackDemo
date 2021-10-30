@@ -4,6 +4,10 @@
 package com.corposense.ocr.demo;
 
 import ratpack.server.RatpackServer;
+import ratpack.thymeleaf3.ThymeleafModule;
+import static ratpack.thymeleaf3.Template.thymeleafTemplate;
+import ratpack.server.BaseDir;
+import ratpack.guice.Guice;
 
 public class App {
 
@@ -11,8 +15,14 @@ public class App {
 
     public static void main(String... args) throws Exception {
         RatpackServer.start(server -> server
-                .handlers(chain -> chain
-                        .get(ctx -> ctx.render("Hello World!"))
+          .serverConfig( s -> s.baseDir(BaseDir.find()))
+          .registry(Guice.registry(bindingsSpec -> {
+            bindingsSpec.module(ThymeleafModule.class);
+          }))
+          .handlers(chain -> chain
+                        .get(ctx -> ctx.render("Go to Upload file page"))
+                        .get("upload", ctx -> ctx.render(thymeleafTemplate("upload")))
+                        .post("ocr", ctx -> ctx.render(thymeleafTemplate("ocr")))
                         .get(":name", ctx -> ctx.render("Hello " +
                                 ctx.getPathTokens().get("name") + "!"))
                 )
