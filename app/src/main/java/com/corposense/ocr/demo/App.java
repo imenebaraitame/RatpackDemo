@@ -3,16 +3,12 @@
  */
 package com.corposense.ocr.demo;
 
-import org.thymeleaf.context.IContext;
-import ratpack.form.Form;
+
 import ratpack.guice.Guice;
 import ratpack.server.BaseDir;
 import ratpack.server.RatpackServer;
-import ratpack.thymeleaf3.Template;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-
+import ratpack.thymeleaf3.ThymeleafModule;
+import static ratpack.thymeleaf3.Template.thymeleafTemplate;
 
 
 public class App {
@@ -21,64 +17,18 @@ public class App {
 
     public static void main(String... args) throws Exception {
 
-            RatpackServer.start(ratpackServerSpec -> {
+        RatpackServer.start(server -> server
+          .serverConfig( s -> s.baseDir(BaseDir.find()))
+          .registry(Guice.registry(bindingsSpec -> bindingsSpec.module(ThymeleafModule.class)))
+          .handlers(chain -> chain
+                        .get(ctx -> ctx.render("Go to Upload file page"))
+                        .get("upload", ctx -> ctx.render(thymeleafTemplate("upload")))
+                        .post("ocr", ctx -> ctx.render(thymeleafTemplate("ocr")))
+                        .get(":name", ctx -> ctx.render("Hello " +
+                                ctx.getPathTokens().get("name") + "!"))
+                )
+        );
 
-                ratpackServerSpec.serverConfig(s -> s.baseDir(BaseDir.find()))
-                                //.registry(Guice.registry(bindingsSpec -> {
-                                // bindingsSpec.module(ratpack.thymeleaf3.ThymeleafModule.class);
-                               // }))
-
-                                .handlers(chain -> chain
-
-                                        .path(ctx -> {ctx.byMethod(m -> m
-                                                .post( () -> ctx.parse(Form.class).then(form ->
-                                                        {
-                                                            Path path = Files.createTempFile("ratpack", ".jpg");
-                                                            byte[] imgToBytes = form.file("f").getBytes();
-                                                            Files.write(path,imgToBytes);
-                                                            ctx.getResponse().sendFile(path.toAbsolutePath());
-
-                                                        }
-                                                ))
-                                                .get( () -> ctx
-                                                        //.render(ratpack.thymeleaf3.Template.thymeleafTemplate("uploadFile"))
-                                                                .getResponse()
-                                                        .send("text/html",""" 
-                                                        <!DOCTYPE html>
-                                                        <html xmlns="http://www.w3.org/1999/xhtml"
-                                                              xmlns:th="http://www.thymeleaf.org"
-                                                              lang="en">
-                                                        <head>
-                                                            <meta charset="UTF-8">
-                                                            <title>Title</title>
-                                                        </head>
-                                                        <body>
-                                                        <h1>Send me a file!</h1>
-                                                        <form method="POST" enctype="multipart/form-data">
-                                                            <input type="file" name="f"> <br/>
-                                                            <input type="submit" value="Upload files">
-                                                         
-                                                        </form>
-                                                        </body>
-                                                                                                                
-                                                        </html>     
-                                                        """.stripIndent())
-                                                        ));
-
-                                        })
-                                       
-                                        
-                                        .get("route1", ctx -> ctx
-                                                .getResponse().send("I am in route1!")
-                                        )
-                                        .get("route2/:param", ctx -> ctx.getResponse()
-                                                .send(String.format("received param: %s",
-                                                        ctx.getPathTokens().get("param"))))
-
-                                );
-
-                    }
-            );
 
 
 
