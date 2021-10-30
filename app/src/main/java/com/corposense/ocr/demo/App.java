@@ -7,16 +7,31 @@ import ratpack.form.Form;
 import ratpack.guice.Guice;
 import ratpack.server.BaseDir;
 import ratpack.server.RatpackServer;
+import ratpack.thymeleaf3.ThymeleafModule;
+import static ratpack.thymeleaf3.Template.thymeleafTemplate;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-
 
 public class App {
 
     final public static int CONSTANT_VALUE = 1;
 
     public static void main(String... args) throws Exception {
+/*/ Example of usage
+        RatpackServer.start(server -> server
+          .serverConfig( s -> s.baseDir(BaseDir.find()))
+          .registry(Guice.registry(bindingsSpec -> {
+            bindingsSpec.module(ThymeleafModule.class);
+          }))
+          .handlers(chain -> chain
+                        .get(ctx -> ctx.render("Go to Upload file page"))
+                        .get("upload", ctx -> ctx.render(thymeleafTemplate("upload")))
+                        .post("ocr", ctx -> ctx.render(thymeleafTemplate("ocr")))
+                        .get(":name", ctx -> ctx.render("Hello " +
+                                ctx.getPathTokens().get("name") + "!"))
+                )
+        );
+*/
             RatpackServer.start(ratpackServerSpec -> {
                         ratpackServerSpec.serverConfig(s -> s.baseDir(BaseDir.find()))
                                 //.registry(Guice.registry(bindingsSpec -> {
@@ -71,8 +86,6 @@ public class App {
 
                     }
             );
-
-
 
     }
 
