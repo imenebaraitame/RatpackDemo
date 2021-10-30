@@ -2,7 +2,8 @@
 
 [![Open in GitPod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
 
-This a Simple example Ratpack Hello world application that
+This a Simple web application that upload file and send it back to the client and it:
+
 1. Is implemented in java
 2. Uses the Gradle java plugin
 
@@ -11,10 +12,10 @@ Start the application either
 1. By cd into the directory and run:
 
 
-     ./run.sh
+     ./gradlew run -t
 
 
-2. Or by importing the project into your IDE and executing the "RatpackDemo.App class"
+2. Or by importing the project into your IDE and executing the "com.corposense.ocr.demo.App class"
 
 This will start the ratpack app in a development mode. In your browser go to
 
